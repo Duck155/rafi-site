@@ -38,7 +38,9 @@ h2 { font-size:clamp(2rem,4vw,3rem); letter-spacing:-.03em; line-height:1.08; ma
 .media { display:grid; gap:1.2rem; }
 figure img { border-radius:18px; width:100%; }
 figure.light img { background:#fff; padding:clamp(.8rem,3vw,1.6rem); }
-figure.pair { display:grid; grid-template-columns:1fr 1fr; gap:1.2rem; align-items:center; }
+figure.pair { display:grid; grid-template-columns:1fr 1fr; gap:1.2rem; align-items:start; }
+figure.pair img { aspect-ratio:4/5; object-fit:contain; }
+figure.pair.crop img { aspect-ratio:2/3; object-fit:cover; }
 figcaption { grid-column:1/-1; color:var(--muted); font-size:.85rem; margin-top:.6rem; }
 
 #contact { display:grid; grid-template-columns:auto 1fr; gap:clamp(2rem,6vw,5rem); align-items:end; padding:7rem 0 0; border-top:1px solid var(--line); }
@@ -80,7 +82,7 @@ footer { color:var(--muted); font-size:.8rem; text-align:center; padding:2rem; b
       <p class="tools">Raspberry Pi, L298N motor drivers, buck converter, encoders, CAD</p>
     </div>
     <div class="media">
-      <figure class="pair"><img src="img/tripod.webp" alt="Tripod prototype with camera mounted, being controlled from a phone" loading="lazy"><img src="img/tripod-cad.webp" alt="CAD render of the tripod" loading="lazy" style="background:#fff"></figure>
+      <figure class="pair crop"><img src="img/tripod.webp" alt="Tripod prototype with camera mounted, being controlled from a phone" loading="lazy"><img src="img/tripod-cad.webp" alt="CAD render of the tripod" loading="lazy" style="background:#fff"></figure>
       <figure class="light"><img src="img/tripod-system.webp" alt="System diagram: Raspberry Pi connected to the tilt servo, panning motor, height motor, wheel motor and limit buttons" loading="lazy"><figcaption>How the parts connect.</figcaption></figure>
     </div>
   </section>
@@ -146,12 +148,15 @@ for (let i = 0; i < 5; i++) {
 svg.innerHTML = html;
 const digits = [...svg.querySelectorAll('g')];
 const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
-let n = 0;
+let n = 0, timers = [];
 function show(word) {
+  timers.forEach(clearTimeout);
+  timers = [];
   let k = 0;
   digits.forEach((g, i) => g.querySelectorAll('polygon').forEach(p => {
     const on = chars[word[i]].includes(p.dataset.s);
-    still ? p.classList.toggle('on', on) : setTimeout(() => p.classList.toggle('on', on), on ? 90 * k++ : 0);
+    if (still || !on) p.classList.toggle('on', on);
+    else timers.push(setTimeout(() => p.classList.add('on'), 90 * k++));
   }));
   svg.setAttribute('aria-label', `Seven-segment display reading ${word.trim()}`);
 }
