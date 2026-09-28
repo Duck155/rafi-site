@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rafi Uddin</title>
+<meta name="description" content="Rafi Uddin, electrical engineering student at Boston University.">
+<style>
+:root { --bg:#000; --text:#f5f5f7; --muted:#86868b; --line:#2c2c2e; --link:#2997ff; --off:#1a1a1c; }
+* { box-sizing:border-box; margin:0; }
+html { scroll-behavior:smooth; }
+body { background:var(--bg); color:var(--text); font:17px/1.55 -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", system-ui, sans-serif; -webkit-font-smoothing:antialiased; }
+a { color:var(--link); text-decoration:none; } a:hover { text-decoration:underline; }
+a:focus-visible, svg:focus-visible { outline:2px solid var(--link); outline-offset:4px; border-radius:4px; }
+img { display:block; max-width:100%; height:auto; }
+
+nav { position:sticky; top:0; z-index:9; display:flex; justify-content:space-between; align-items:center; padding:.9rem clamp(1.2rem,5vw,3rem);
+  background:rgb(0 0 0 / .7); backdrop-filter:saturate(180%) blur(20px); -webkit-backdrop-filter:saturate(180%) blur(20px); border-bottom:1px solid transparent; font-size:.9rem; }
+nav b { font-weight:600; } nav div { display:flex; gap:1.6rem; } nav div a { color:var(--text); opacity:.8; }
+
+header { position:relative; min-height:92vh; display:grid; place-content:center; justify-items:center; text-align:center; padding:4rem 1.5rem; }
+header::before { content:""; position:absolute; inset:0; z-index:-1;
+  background:linear-gradient(var(--line) 1px, transparent 1px) 0 0/64px 64px, linear-gradient(90deg, var(--line) 1px, transparent 1px) 0 0/64px 64px;
+  mask-image:radial-gradient(ellipse at center, #000 10%, transparent 65%); -webkit-mask-image:radial-gradient(ellipse at center, #000 10%, transparent 65%); }
+#seg { width:min(640px, 88vw); cursor:pointer; margin-bottom:3rem; }
+#seg polygon { fill:var(--off); transition:fill .25s, filter .25s; }
+#seg polygon.on { fill:var(--text); filter:drop-shadow(0 0 6px rgb(245 245 247 / .55)); }
+h1 { font-size:clamp(3rem,9vw,6.5rem); font-weight:700; letter-spacing:-.045em; line-height:1; }
+header p { color:var(--muted); font-size:clamp(1.1rem,2.2vw,1.5rem); max-width:34ch; margin-top:1.2rem; line-height:1.35; }
+
+main { max-width:1120px; margin:auto; padding:0 clamp(1.2rem,5vw,3rem); }
+.project { display:grid; grid-template-columns:5fr 7fr; gap:clamp(2rem,6vw,5rem); padding:7rem 0; border-top:1px solid var(--line); }
+.info { position:sticky; top:6rem; align-self:start; }
+.info small { color:var(--muted); font-size:.95rem; }
+h2 { font-size:clamp(2rem,4vw,3rem); letter-spacing:-.03em; line-height:1.08; margin:.3rem 0 1.2rem; }
+.info p { color:#d2d2d7; max-width:42ch; margin-bottom:1rem; }
+.info .tools { color:var(--muted); font-size:.9rem; border-top:1px solid var(--line); padding-top:1rem; margin-top:1.6rem; }
+.media { display:grid; gap:1.2rem; }
+figure img { border-radius:18px; width:100%; }
+figure.light img { background:#fff; padding:clamp(.8rem,3vw,1.6rem); }
+figure.pair { display:grid; grid-template-columns:1fr 1fr; gap:1.2rem; align-items:center; }
+figcaption { grid-column:1/-1; color:var(--muted); font-size:.85rem; margin-top:.6rem; }
+
+#contact { display:grid; grid-template-columns:auto 1fr; gap:clamp(2rem,6vw,5rem); align-items:end; padding:7rem 0 0; border-top:1px solid var(--line); }
+#contact img { width:clamp(180px,26vw,300px); mask-image:linear-gradient(#000 70%, transparent); -webkit-mask-image:linear-gradient(#000 70%, transparent); }
+#contact div { padding-bottom:4rem; } #contact p { font-size:1.3rem; line-height:1.8; }
+footer { color:var(--muted); font-size:.8rem; text-align:center; padding:2rem; border-top:1px solid var(--line); }
+
+@media (max-width:760px) {
+  .project, #contact { grid-template-columns:1fr; } .info { position:static; }
+  #contact img { margin:auto; } nav div { gap:1rem; }
+}
+@media (prefers-reduced-motion:no-preference) {
+  @supports (animation-timeline: view()) {
+    .media figure { animation:rise linear both; animation-timeline:view(); animation-range:entry 0% cover 35%; }
+    nav { animation:edge linear both; animation-timeline:scroll(root); animation-range:0 200px; }
+  }
+}
+@keyframes rise { from { opacity:.2; transform:scale(.92) translateY(40px); } }
+@keyframes edge { to { border-color:var(--line); } }
+</style>
+</head>
+<body>
+
+<nav><b>Rafi Uddin</b><div><a href="#work">Work</a><a href="#contact">Contact</a></div></nav>
+
+<header>
+  <svg id="seg" role="img" aria-label="Seven-segment display reading HELLO" tabindex="0"></svg>
+  <h1>Rafi Uddin</h1>
+  <p>Electrical engineering student at Boston University. FPGA design, power systems and electromechanical hardware.</p>
+</header>
+
+<main id="work">
+  <section class="project">
+    <div class="info">
+      <small>Senior capstone</small>
+      <h2>Motorized tripod</h2>
+      <p>A camera tripod that pans, tilts, changes height and drives on wheels, all controlled from an Android phone over Wi‑Fi. The camera feed streams back to the phone.</p>
+      <p>My part was the physical base and the power. I built the legs and the triangular support underneath that keeps it stable, fixed the wheel axles so it rolls smoothly, and wired the motor drivers, buck converter, 12&nbsp;V power lines and 5&nbsp;V control lines.</p>
+      <p class="tools">Raspberry Pi, L298N motor drivers, buck converter, encoders, CAD</p>
+    </div>
+    <div class="media">
+      <figure class="pair"><img src="img/tripod.webp" alt="Tripod prototype with camera mounted, being controlled from a phone" loading="lazy"><img src="img/tripod-cad.webp" alt="CAD render of the tripod" loading="lazy" style="background:#fff"></figure>
+      <figure class="light"><img src="img/tripod-system.webp" alt="System diagram: Raspberry Pi connected to the tilt servo, panning motor, height motor, wheel motor and limit buttons" loading="lazy"><figcaption>How the parts connect.</figcaption></figure>
+    </div>
+  </section>
+
+  <section class="project">
+    <div class="info">
+      <small>Power systems</small>
+      <h2>Rooftop solar in Battery Park City</h2>
+      <p>A model of the Battery Park City distribution network in Lower Manhattan, built to see how much rooftop solar the grid can take and where it pays off.</p>
+      <p>Rooftop potential came from Google Project Sunroof and grid limits from Con Edison hosting-capacity data. DC optimal power flow ran over a full year of hourly load, with network constraints and installation costs.</p>
+      <p class="tools">MATLAB, YALMIP, DC optimal power flow, hosting capacity analysis</p>
+    </div>
+    <div class="media">
+      <figure class="pair light"><img src="img/pv-map.webp" alt="Network nodes and lines mapped over Battery Park City" loading="lazy"><img src="img/pv-chart.webp" alt="Maximum line utilization per hour over one year, ranging from about 35 to 85 percent" loading="lazy"><figcaption>The network, and its most loaded line for every hour of the year.</figcaption></figure>
+    </div>
+  </section>
+
+  <section class="project">
+    <div class="info">
+      <small>Digital logic</small>
+      <h2>Morse code translator</h2>
+      <p>Tap Morse code on the push buttons of a Nexys A7 FPGA and the letters appear on its 7‑segment display.</p>
+      <p>Written in Verilog: debounced button inputs, a decoder module, a clock divider and a state machine that drives the display.</p>
+      <p class="tools">Verilog, Digilent Nexys A7, finite state machines, 7‑segment display control</p>
+    </div>
+    <div class="media">
+      <figure><img src="img/fpga-board.webp" alt="Nexys A7 board with HELLO on its 7-segment display" loading="lazy"><figcaption>HELLO, entered in Morse.</figcaption></figure>
+      <figure class="light"><img src="img/fpga-schematic.webp" alt="Schematic: five debounced buttons feed the Morse-to-text module, which feeds the display state machine" loading="lazy"></figure>
+    </div>
+  </section>
+
+  <section id="contact">
+    <img src="img/rafi.webp" alt="Rafi Uddin" width="600" height="800">
+    <div>
+      <h2>Get in touch</h2>
+      <p><a href="mailto:rafimuddin9@gmail.com">rafimuddin9@gmail.com</a><br>
+      <a href="https://www.linkedin.com/in/rafi-uddin-511306332">LinkedIn</a></p>
+    </div>
+  </section>
+</main>
+
+<footer>© <span id="y"></span> Rafi Uddin</footer>
+
+<script>
+// 7-segment display. Segments: a b c d e f g
+const chars = { H:'bcefg', E:'adefg', L:'def', O:'abcdef', r:'eg', A:'abcefg', F:'aefg', I:'bc', ' ':'' };
+const words = ['HELLO', 'rAFI '], W = 50, H = 45, T = 10, GAP = 7, STEP = 78;
+const seg = (x1, y1, x2, y2) => { // hexagon between two points
+  const h = y1 === y2, t = T / 2;
+  const p = h ? [[x1,y1],[x1+t,y1-t],[x2-t,y2-t],[x2,y2],[x2-t,y2+t],[x1+t,y1+t]]
+              : [[x1,y1],[x1+t,y1+t],[x2+t,y2-t],[x2,y2],[x2-t,y2-t],[x1-t,y1+t]];
+  return p.map(q => q.join(',')).join(' ');
+};
+const shapes = { a:[GAP,0,W-GAP,0], b:[W,GAP,W,H-GAP], c:[W,H+GAP,W,2*H-GAP], d:[GAP,2*H,W-GAP,2*H], e:[0,H+GAP,0,2*H-GAP], f:[0,GAP,0,H-GAP], g:[GAP,H,W-GAP,H] };
+const svg = document.getElementById('seg');
+svg.setAttribute('viewBox', `-26 -12 ${STEP * 4 + W + 44} ${2 * H + 24}`);
+let html = '';
+for (let i = 0; i < 5; i++) {
+  html += `<g transform="translate(${i * STEP} 0) skewX(-8)">`;
+  for (const s in shapes) html += `<polygon data-s="${s}" points="${seg(...shapes[s])}"/>`;
+  html += '</g>';
+}
+svg.innerHTML = html;
+const digits = [...svg.querySelectorAll('g')];
+const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
+let n = 0;
+function show(word) {
+  let k = 0;
+  digits.forEach((g, i) => g.querySelectorAll('polygon').forEach(p => {
+    const on = chars[word[i]].includes(p.dataset.s);
+    still ? p.classList.toggle('on', on) : setTimeout(() => p.classList.toggle('on', on), on ? 90 * k++ : 0);
+  }));
+  svg.setAttribute('aria-label', `Seven-segment display reading ${word.trim()}`);
+}
+const next = () => show(words[n = (n + 1) % words.length]);
+svg.addEventListener('click', next);
+svg.addEventListener('keydown', e => (e.key === 'Enter' || e.key === ' ') && (e.preventDefault(), next()));
+show(words[0]);
+document.getElementById('y').textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
